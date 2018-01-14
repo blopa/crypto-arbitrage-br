@@ -4,16 +4,15 @@ var _ = require('lodash');
 var fs = require('fs');
 var beep = require('beepbeep');
 
-function checkOpportunity (prices) {	
+function checkOpportunity (prices) {
 
-	let amount = 0.015
-
+	let amount = 0.1
 
 	// console.log(prices);
 	var txtPrices = JSON.stringify(prices);
 	fs.writeFile('lastFetchedData.txt', txtPrices, 'utf-8', function(err){
 		if (err) throw err;
- 	 	// console.log('The file has been saved!');
+		// console.log('The file has been saved!');
 	})
 
 
@@ -23,13 +22,12 @@ function checkOpportunity (prices) {
 	console.log(`Melhor bid (preço de venda): ${bestBid.bid}`);
 	console.log(`Melhor ask (preço de compra): ${bestAsk.ask}`);
 
-	
 	if ( bestBid.bid > bestAsk.ask ) {
 		
 		console.log('Possíveis Oportunidades. Verificando custo para comprar '+amount+' bitcoins....');
 		
 		var priceDifference = (bestBid.bid * amount) - (bestAsk.ask * amount);
-		console.log('Ganha-se na arbitragem: R$', priceDifference.toFixed(2), 'comprando na',bestAsk.name, 'por: R$', bestAsk.ask ,'e vendendo na',bestBid.name, 'por: R$', bestBid.bid);
+		console.log('Ganha-se na arbitragem: US$', priceDifference.toFixed(2), 'comprando na',bestAsk.name, 'por: US$', bestAsk.ask ,'e vendendo na',bestBid.name, 'por: US$', bestBid.bid);
 
 
 		var buyCost = bestAsk.ask * amount * bestAsk.cost;

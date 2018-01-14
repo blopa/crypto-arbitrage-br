@@ -1,6 +1,6 @@
 "use strict";
 
-const ccxt = require ('ccxt');
+const ccxt = require('ccxt');
 const checkArb = require('./check-arb');
 
 // Taker
@@ -45,6 +45,34 @@ async function fetchDataMercadoBitcoin() {
   };
 };
 
+async function fetchDataGateIO() {
+
+  const gateio = new ccxt.gateio();
+
+  const market = await gateio.fetchTicker('BTC/USDT');
+
+  return {
+      name: 'gateio',
+      cost: 0.007,
+      bid: market.bid,
+      ask: market.ask
+  };
+};
+
+async function fetchDataBinance() {
+
+  const binance = new ccxt.binance();
+
+  const market = await binance.fetchTicker('BTC/USDT');
+
+  return {
+      name: 'binance',
+      cost: 0.007,
+      bid: market.bid,
+      ask: market.ask
+  };
+};
+
 async function fetchDataFlowBTC() {
 
   const flowbtc = new ccxt.flowbtc();
@@ -64,15 +92,18 @@ async function fetchData() {
     console.log('Procurando oportunidades....');
 
     try {
-
-        const dataFoxBit = await fetchDataFoxBit();
-        const dataMercadoBitcoin = await fetchDataMercadoBitcoin();
+        // const dataFoxBit = await fetchDataFoxBit();
+        // const dataMercadoBitcoin = await fetchDataMercadoBitcoin();
         // const dataFlowBTC = await fetchDataFlowBTC();
+        const dataGateIO = await fetchDataGateIO();
+        const dataBinance = await fetchDataBinance();
 
         Promise.all([
-          await fetchDataFoxBit(), 
-          await fetchDataMercadoBitcoin(), 
-          // await fetchDataFlowBTC()
+          // await fetchDataFoxBit(),
+          // await fetchDataMercadoBitcoin(),
+          // await fetchDataFlowBTC(),
+          await fetchDataGateIO(),
+          await fetchDataBinance(),
           ])
           .then((response) => {
               checkArb(response);
@@ -90,7 +121,6 @@ async function fetchData() {
         console.error(err.message);
         setTimeout(fetchData, 60000);
     }
-    
 }
 
 fetchData();

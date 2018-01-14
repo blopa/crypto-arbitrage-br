@@ -1,1 +1,1 @@
-[{"name":"foxbit","cost":0.005,"bid":16675,"ask":16680.01},{"name":"mercado","cost":0.007,"bid":16925,"ask":16927.00011},{"name":"flowbtc","cost":0.0035,"bid":16292.08,"ask":16666}]
+[{"name":"gateio","cost":0.007,"bid":13252.84,"ask":13329.6},{"name":"binance","cost":0.007,"bid":13311.14,"ask":13323}]
